@@ -6,6 +6,8 @@ import tensorflow as tf
 
 import nltk
 from nltk.stem import WordNetLemmatizer
+nltk.download('punkt')
+nltk.download('wordnet')
 
 lemmatizer = WordNetLemmatizer()
 
@@ -32,7 +34,7 @@ classes = sorted(set(classes))
 pickle.dump(words, open('words.pkl', 'wb'))
 pickle.dump(classes, open('classes.pkl', 'wb'))
 
-training = []
+training = [] 
 outputEmpty = [0] * len(classes)
 
 for document in documents:
