@@ -6,9 +6,11 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 import tensorflow as tf
 from keras.models import load_model
+import tkinter as tk
+from tkinter import ttk
+
 nltk.download('punkt')
 nltk.download('wordnet')
-
 
 lemmatizer = WordNetLemmatizer()
 intents = json.loads(open('intents.json').read())
@@ -52,12 +54,28 @@ def response(intents_list, intents_json):
             break
     return result
 
-
-print("Bot is running, start chatting!")
-
-while True:
-    message = input("")
+def send():
+    message = entry_field.get()
     ints = predict(message)
     res = response(ints, intents)
-    print(res)
+    chat.insert(tk.END, "You: " + message + '\n\n')
+    chat.insert(tk.END, "Bot: " + res + '\n\n')
+    entry_field.delete(0, tk.END)
 
+root = tk.Tk()
+root.title("Chatbot")
+
+frame = tk.Frame(root)
+scrollbar = tk.Scrollbar(frame)
+chat = tk.Listbox(frame, width=150, height=20, yscrollcommand=scrollbar.set)
+scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+chat.pack(side=tk.LEFT, fill=tk.BOTH, pady=10)
+frame.pack()
+
+entry_field = ttk.Entry(root, width=60)
+entry_field.pack(fill=tk.X, padx=10)
+
+send_button = ttk.Button(root, text="Send", command=send)
+send_button.pack(ipadx=20)
+
+root.mainloop()
