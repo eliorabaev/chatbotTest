@@ -3,9 +3,11 @@ import json
 import pickle
 import numpy as np
 import nltk
-import tensorflow as tf
 from nltk.stem import WordNetLemmatizer
+import tensorflow as tf
 from keras.models import load_model
+nltk.download('punkt')
+nltk.download('wordnet')
 
 
 lemmatizer = WordNetLemmatizer()
